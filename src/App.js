@@ -1,24 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+
+import Home from "./Pages/Home";
+import Login from "./Pages/Login";
+import Signup from "./Pages/Signup";
 
 function App() {
+  const [token, setToken] = useState(false);
+  if (token) {
+    sessionStorage.setItem("token", JSON.stringify("token"));
+  }
+  useEffect(() => {
+    if (sessionStorage.getItem("token")) {
+      const data = JSON.parse(sessionStorage.getItem("token"));
+      setToken(data);
+    }
+  }, []);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Login setToken={setToken} />} />
+          <Route path="/signup" element={<Signup />} />
+          {token ? <Route path="/home" element={<Home token={token} />} /> : ""}
+        </Routes>
+      </BrowserRouter>
+    </>
   );
 }
 
