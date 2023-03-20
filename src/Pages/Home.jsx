@@ -31,7 +31,7 @@ function Home({ token }) {
   };
   useEffect(() => {
     fetchinput();
-  }, []);
+  }, [recipe]);
 
   const deleteRecipe = (id) => {
     setRecipe((prev) => {
