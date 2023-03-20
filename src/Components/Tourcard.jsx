@@ -17,10 +17,10 @@ import MenuItem from "@mui/material/MenuItem";
 import supabase from "../config/supabase";
 import J25EditModal from "./J25EditModal";
 
-function Tourcard({ recipe, deleteRecipe }) {
+function Tourcard({ item, deleteRecipe }) {
   const [openModel, setOpenModel] = useState(false);
   const [anchorEl, setAnchorEl] = useState(false);
-  const { id, user, date, dishname, category, price } = recipe;
+  const { id, user, date, dishname, category, price } = item;
 
   const deletehandler = async (id) => {
     const { error } = await supabase.from("Datas").delete().eq("id", id);
@@ -28,8 +28,8 @@ function Tourcard({ recipe, deleteRecipe }) {
       alert("not deleted");
     } else {
       handleClose();
+      deleteRecipe(id);
     }
-    deleteRecipe(id);
   };
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);

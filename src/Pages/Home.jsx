@@ -10,8 +10,6 @@ import Tourcard from "../Components/Tourcard";
 import Form from "../Components/Form";
 
 function Home({ token }) {
-  
-
   const [recipe, setRecipe] = useState([]);
   const navigate = useNavigate();
   const logouthandler = () => {
@@ -19,7 +17,6 @@ function Home({ token }) {
     navigate("/");
   };
   const fetchinput = async () => {
-   
     const { data, error } = await supabase
       .from("Datas")
       .select()
@@ -34,7 +31,7 @@ function Home({ token }) {
   };
   useEffect(() => {
     fetchinput();
-  }, [recipe?.length]);
+  }, []);
 
   const deleteRecipe = (id) => {
     setRecipe((prev) => {
@@ -44,13 +41,13 @@ function Home({ token }) {
   return (
     <>
       <Nav logouthandler={logouthandler} />
-     
+
       <Container maxWidth="xl">
         <Stack direction="column" gap="50px">
           <Form recipe={recipe} />
           <Grid container columnGap={2} rowGap={2} columns={8} direction="row">
             {recipe.map((item) => {
-              return <Tourcard recipe={recipe} deleteRecipe={deleteRecipe} />;
+              return <Tourcard item={item} deleteRecipe={deleteRecipe} />;
             })}
           </Grid>
         </Stack>
