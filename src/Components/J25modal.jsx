@@ -31,8 +31,7 @@ const Styledbox = styled(Box)({
   width: 500,
 });
 
-function J25modal({ openModel, setOpenModel, recipe }) {
-  const open = openModel;
+function J25modal({ openModel, setOpenModel }) {
   const [validation, setValidation] = useState(false);
   const [inputData, setInputData] = useState({
     user: "",
@@ -42,16 +41,17 @@ function J25modal({ openModel, setOpenModel, recipe }) {
     category: "",
     price: "",
   });
-  const { user, date, file, dishname, category, price } = inputData;
+  const { user, date, dishname, category, price } = inputData;
+  const open = openModel;
   const addRecipeHandler = async () => {
     const { data, error } = await supabase
       .from("Datas")
       .insert({ user, date, dishname, category, price });
     if (data) {
-      recipe(data);
     } else {
       setOpenModel(false);
     }
+
     if (error) {
       alert("something went wrong");
     }
@@ -70,7 +70,6 @@ function J25modal({ openModel, setOpenModel, recipe }) {
       });
     }
   };
-
   const recipes = [
     {
       name: "Biriyani",
@@ -138,14 +137,14 @@ function J25modal({ openModel, setOpenModel, recipe }) {
                       setInputData({ ...inputData, date: e.target.value });
                     }}
                   />
-                  <Input
+                  {/* <Input
                     placeholder="Image"
                     type="file"
                     value={file}
                     onChange={(e) => {
                       setInputData({ ...inputData, file: e.target.value });
                     }}
-                  />
+                  /> */}
 
                   <TextField
                     variant="standard"

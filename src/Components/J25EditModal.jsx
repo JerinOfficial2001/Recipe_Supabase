@@ -1,7 +1,7 @@
 import Button from "@mui/material/Button";
 import Fade from "@mui/material/Fade";
 import Modal from "@mui/material/Modal";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import styled from "styled-components";
 import Input from "@mui/material/Input";
@@ -17,7 +17,6 @@ import Select from "@mui/material/Select";
 import InputAdornment from "@mui/material/InputAdornment";
 import TextField from "@mui/material/TextField";
 import supabase from "../config/supabase";
-import { useParams } from "react-router-dom";
 
 const Styledmodel = styled(Modal)({
   display: "flex",
@@ -32,9 +31,7 @@ const Styledbox = styled(Box)({
   width: 500,
 });
 
-function J25EditModal({ recipe, openModel, setOpenModel }) {
-  const { id } = useParams();
-  const open = openModel;
+function J25EditModal({ setAnchorEl, openModel, setOpenModel }) {
   const [validation, setValidation] = useState(false);
   const [inputData, setInputData] = useState({
     user: "",
@@ -44,47 +41,36 @@ function J25EditModal({ recipe, openModel, setOpenModel }) {
     category: "",
     price: "",
   });
-  const { user, date, file, dishname, category, price } = inputData;
-
-  useEffect(() => {
-    const fetchRecipe = async () => {
-      const { data, error } = await supabase
-        .from("Datas")
-        .select()
-        .eq("id", id)
-        .single();
-
-      if (error) {
-        alert("edit part error");
-      }
-      if (data) {
-        
-      }
-    };
-    fetchRecipe();
-  }, [id]);
-
+  const { user, date, dishname, category, price } = inputData;
+  const open = openModel;
+  setAnchorEl(false);
   const addRecipeHandler = async () => {
-    await supabase
+    const { data, error } = await supabase
       .from("Datas")
-      .update({ user, date, dishname, category, price })
-      .eq("id", id);
+      .insert({ user, date, dishname, category, price });
+    if (data) {
+    } else {
+      setOpenModel(false);
+    }
+
+    if (error) {
+      alert("something went wrong");
+    }
+
+    if (!user || !date || !dishname || !category || !price) {
+      setValidation(true);
+    } else {
+      console.log(inputData);
+      setInputData({
+        user: "",
+        date: "",
+        file: "",
+        dishname: "",
+        category: "",
+        price: "",
+      });
+    }
   };
-
-  if (!user || !date || !dishname || !category || !price) {
-    setValidation(true);
-  } else {
-    console.log(inputData);
-    setInputData({
-      user: "",
-      date: "",
-      file: "",
-      dishname: "",
-      category: "",
-      price: "",
-    });
-  }
-
   const recipes = [
     {
       name: "Biriyani",
@@ -152,14 +138,14 @@ function J25EditModal({ recipe, openModel, setOpenModel }) {
                       setInputData({ ...inputData, date: e.target.value });
                     }}
                   />
-                  <Input
+                  {/* <Input
                     placeholder="Image"
                     type="file"
                     value={file}
                     onChange={(e) => {
                       setInputData({ ...inputData, file: e.target.value });
                     }}
-                  />
+                  /> */}
 
                   <TextField
                     variant="standard"

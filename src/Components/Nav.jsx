@@ -9,6 +9,7 @@ import MenuOpen from "@mui/icons-material/MenuOpen";
 
 import Stack from "@mui/material/Stack";
 import ShoppingCart from "@mui/icons-material/ShoppingCart";
+import Searchbar from "./Searchbar";
 
 function Nav({ logouthandler }) {
  const [anchorEl, setAnchorEl] = useState(null);
@@ -27,6 +28,7 @@ function Nav({ logouthandler }) {
     <AppBar position="sticky">
       <Toolbar sx={{ justifyContent: "space-between" }}>
         <Typography variant="h6">Recipe</Typography>
+        <Searchbar/>
         <Stack direction="row" spacing={1}>
           <IconButton>
             <ShoppingCart

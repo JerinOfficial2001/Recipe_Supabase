@@ -19,27 +19,28 @@ import J25EditModal from "./J25EditModal";
 
 function Tourcard({ recipe, deleteRecipe }) {
   const [openModel, setOpenModel] = useState(false);
-  const [anchorEl, setAnchorEl] = useState(null);
+  const [anchorEl, setAnchorEl] = useState(false);
+  const { id, user, date, dishname, category, price } = recipe;
+
   const deletehandler = async (id) => {
     const { error } = await supabase.from("Datas").delete().eq("id", id);
-    deleteRecipe(id);
     if (error) {
       alert("not deleted");
     } else {
       handleClose();
     }
+    deleteRecipe(id);
   };
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
   const handleClose = () => {
-    setAnchorEl(null);
+    setAnchorEl(false);
   };
 
-  const { id, user, date, dishname, category, price } = recipe;
   return (
-    <Card sx={{ maxWidth: 290, minWidth: 210, maxHeight: 310 }}>
+    <Card sx={{ maxWidth: 210, minWidth: 210, maxHeight: 320 }}>
       <CardHeader
         avatar={<Avatar>J</Avatar>}
         action={
@@ -60,11 +61,13 @@ function Tourcard({ recipe, deleteRecipe }) {
               >
                 Edit
               </MenuItem>
-              {openModel && <J25EditModal
-                recipe={recipe}
-                openModel={openModel}
-                setOpenModel={setOpenModel}
-              />}
+              {openModel && (
+                <J25EditModal
+                  openModel={openModel}
+                  setOpenModel={setOpenModel}
+                  setAnchorEl={setAnchorEl}
+                />
+              )}
               <MenuItem
                 onClick={() => {
                   deletehandler(id);

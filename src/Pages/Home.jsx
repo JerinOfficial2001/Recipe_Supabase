@@ -1,17 +1,17 @@
 import Stack from "@mui/material/Stack";
-
 import Container from "@mui/material/Container";
-
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Nav from "../Components/Nav";
 import supabase from "../config/supabase";
 
-import Content from "../Components/Content";
-import Loader from "../Components/Loader";
+import Grid from "@mui/material/Grid";
+import Tourcard from "../Components/Tourcard";
+import Form from "../Components/Form";
 
 function Home({ token }) {
-  const [progress, setProgress] = useState(false);
+  
+
   const [recipe, setRecipe] = useState([]);
   const navigate = useNavigate();
   const logouthandler = () => {
@@ -19,7 +19,7 @@ function Home({ token }) {
     navigate("/");
   };
   const fetchinput = async () => {
-    setProgress(false);
+   
     const { data, error } = await supabase
       .from("Datas")
       .select()
@@ -34,16 +34,25 @@ function Home({ token }) {
   };
   useEffect(() => {
     fetchinput();
-  }, []);
+  }, [recipe?.length]);
 
-  
+  const deleteRecipe = (id) => {
+    setRecipe((prev) => {
+      return prev.filter((item) => item.id !== id);
+    });
+  };
   return (
     <>
       <Nav logouthandler={logouthandler} />
-      <Loader progress={progress} />
+     
       <Container maxWidth="xl">
         <Stack direction="column" gap="50px">
-          <Content recipe={recipe} setRecipe={setRecipe} />
+          <Form recipe={recipe} />
+          <Grid container columnGap={2} rowGap={2} columns={8} direction="row">
+            {recipe.map((item) => {
+              return <Tourcard recipe={recipe} deleteRecipe={deleteRecipe} />;
+            })}
+          </Grid>
         </Stack>
       </Container>
     </>
