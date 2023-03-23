@@ -16,8 +16,12 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import supabase from "../config/supabase";
 import J25EditModal from "./J25EditModal";
+import Button from "@mui/material/Button";
+import { useDispatch } from "react-redux";
+import { addcard } from "../Redux/User";
 
-function Tourcard({ item, deleteRecipe }) {
+function Tourcard({ item, deleteRecipe, setOpen }) {
+  const dispatch = useDispatch();
   const [openModel, setOpenModel] = useState(false);
   const [anchorEl, setAnchorEl] = useState(false);
   const { id, user, date, dishname, category, price } = item;
@@ -111,6 +115,14 @@ function Tourcard({ item, deleteRecipe }) {
         <IconButton>
           <Share />
         </IconButton>
+        <Button
+          onClick={() => {
+            dispatch(addcard(item));
+            setOpen(true);
+          }}
+        >
+          Add Cart
+        </Button>
       </CardActions>
     </Card>
   );

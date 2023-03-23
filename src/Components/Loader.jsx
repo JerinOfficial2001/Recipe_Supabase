@@ -1,8 +1,23 @@
-import LinearProgress from "@mui/material/LinearProgress";
+import Modal from "@mui/material/Modal";
+import CircularProgress from "@mui/material/CircularProgress";
 import React from "react";
 
-function Loader({ progress }) {
-  return <LinearProgress variant="determinate" value={progress} />;
+function Loader({ loading }) {
+  return (
+    <Modal open={loading}>
+      <div
+        style={{
+          width: "100%",
+          height: "100vh",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <CircularProgress />
+      </div>
+    </Modal>
+  );
 }
 
 export default Loader;

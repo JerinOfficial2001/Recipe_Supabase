@@ -43,6 +43,7 @@ function J25modal({ openModel, setOpenModel }) {
   });
   const { user, date, dishname, category, price } = inputData;
   const open = openModel;
+
   const addRecipeHandler = async () => {
     const { data, error } = await supabase
       .from("Datas")
@@ -59,7 +60,6 @@ function J25modal({ openModel, setOpenModel }) {
     if (!user || !date || !dishname || !category || !price) {
       setValidation(true);
     } else {
-      console.log(inputData);
       setInputData({
         user: "",
         date: "",
@@ -171,9 +171,11 @@ function J25modal({ openModel, setOpenModel }) {
                         });
                       }}
                     >
-                      {recipes.map((item) => {
+                      {recipes.map((item, index) => {
                         return (
-                          <MenuItem value={item.name}>{item.name}</MenuItem>
+                          <MenuItem key={index} value={item.name}>
+                            {item.name}
+                          </MenuItem>
                         );
                       })}
                     </Select>

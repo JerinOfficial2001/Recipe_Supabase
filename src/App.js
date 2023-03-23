@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-
+import Cart from "./Pages/Cart";
 import Home from "./Pages/Home";
 import Login from "./Pages/Login";
-import Sample from "./Pages/Sample";
+
 import Signup from "./Pages/Signup";
 
 function App() {
@@ -24,7 +24,7 @@ function App() {
           <Route path="/" element={<Login setToken={setToken} />} />
           <Route path="/signup" element={<Signup />} />
           {token ? <Route path="/home" element={<Home token={token} />} /> : ""}
-          <Route path="/sample" element={<Sample />} />
+          {token ? <Route path="/cart" element={<Cart />} /> : ""}
         </Routes>
       </BrowserRouter>
     </>
