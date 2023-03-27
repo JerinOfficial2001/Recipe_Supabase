@@ -3,9 +3,21 @@ import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import React from "react";
 import { useSelector } from "react-redux";
+import supabase from "../config/supabase";
 
-function Cartcard({ deleteCartHandler, deleteitem }) {
+
+function Cartcard({ deleteCartItem }) {
   const { carts } = useSelector((item) => item.user);
+
+
+  const deleteCartHandler = async (id) => {
+    const { error } = await supabase.from("cartdata").delete().eq("id", id);
+    if (error) {
+      alert("cartItem not deleted");
+    } else {
+      deleteCartItem(id);
+    }
+  };
 
   return (
     <Stack width="100%" direction="column" spacing={1}>
@@ -46,10 +58,11 @@ function Cartcard({ deleteCartHandler, deleteitem }) {
               <Typography>Quantity:{quantity}</Typography>
               <Button
                 onClick={() => {
-                  deleteCartHandler(deleteitem);
+                  deleteCartHandler(id);
+                 
                 }}
               >
-                Remove
+                Remove{" "}
               </Button>
             </Stack>
           </Stack>

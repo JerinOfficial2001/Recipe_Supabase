@@ -49,6 +49,7 @@ function J25modal({ openModel, setOpenModel }) {
       .from("Datas")
       .insert({ user, date, dishname, category, price });
     if (data) {
+      
     } else {
       setOpenModel(false);
     }

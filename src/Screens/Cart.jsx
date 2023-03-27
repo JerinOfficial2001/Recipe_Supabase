@@ -1,7 +1,5 @@
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-
-import Stack from "@mui/material/Stack";
 import React from "react";
 import Cartcard from "../Components/Cartcard";
 import Modal from "@mui/material/Modal";
@@ -9,7 +7,7 @@ import Fade from "@mui/material/Fade";
 import Cancel from "@mui/icons-material/Cancel";
 import { IconButton } from "@mui/material";
 
-function Cart({ deleteitem, open, setOpen, deleteCartHandler }) {
+function Cart({ deleteCartItem, open, setOpen }) {
   return (
     <Modal
       aria-labelledby="transition-modal-title"
@@ -63,7 +61,7 @@ function Cart({ deleteitem, open, setOpen, deleteCartHandler }) {
                   PRODUCTS DETAILS
                 </Typography>
               </Box>
-              <Cartcard deleteCartHandler={deleteCartHandler} />
+              <Cartcard deleteCartItem={deleteCartItem} />
             </Box>
 
             {/* <Stack

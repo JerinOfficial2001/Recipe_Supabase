@@ -13,12 +13,13 @@ import Loader from "../Components/Loader";
 
 import Cart from "../Screens/Cart";
 import { useDispatch } from "react-redux";
-import { addcard, getCartItems, remove } from "../Redux/User";
+import { addcard, getCartItems } from "../Redux/User";
 
 function Home({ token }) {
   const dispatch = useDispatch();
   const [isLoading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
+  const [cartItems, setcartItems] = useState([]);
   const [recipe, setRecipe] = useState([]);
   const navigate = useNavigate();
   const logouthandler = () => {
@@ -64,19 +65,17 @@ function Home({ token }) {
     if (data) {
       dispatch(getCartItems(data));
       setLoading(false);
+      setcartItems(data);
     }
   };
 
   fetchCartData();
 
-  const deleteCartHandler = async (item) => {
-    const { error } = await supabase.from("cartdata").delete();
-    if (error) {
-      alert("cart not deleted");
-    } else {
-      dispatch(remove(item));
-    }
-  };
+const deleteCartItem = (id) => {
+  setcartItems((prevcartitem) => {
+    return prevcartitem.filter((item) => item.id !== id);
+  });
+};
 
   return (
     <>
@@ -103,10 +102,7 @@ function Home({ token }) {
 
               return (
                 <>
-                  <Cart
-                    deleteitem={item}
-                    deleteCartHandler={deleteCartHandler}
-                  />
+                  <Cart deleteCartItem={deleteCartItem} />
                   <Tourcard
                     addToCartHandler={addToCartHandler}
                     setOpen={setOpen}

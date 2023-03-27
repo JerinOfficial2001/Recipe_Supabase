@@ -1,7 +1,7 @@
 import Button from "@mui/material/Button";
 import Fade from "@mui/material/Fade";
 import Modal from "@mui/material/Modal";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import styled from "styled-components";
 import Input from "@mui/material/Input";
@@ -31,7 +31,7 @@ const Styledbox = styled(Box)({
   width: 500,
 });
 
-function J25EditModal({ setAnchorEl, openModel, setOpenModel }) {
+function J25EditModal({ item, setAnchorEl, openModel, setOpenModel }) {
   const [validation, setValidation] = useState(false);
   const [inputData, setInputData] = useState({
     user: "",
@@ -44,17 +44,27 @@ function J25EditModal({ setAnchorEl, openModel, setOpenModel }) {
   const { user, date, dishname, category, price } = inputData;
   const open = openModel;
   setAnchorEl(false);
-  const addRecipeHandler = async () => {
-    const { data, error } = await supabase
+
+  useEffect(() => {
+    setInputData({
+      user: item.user,
+      date: item.date,
+      dishname: item.dishname,
+      category: item.category,
+      price: item.price,
+    });
+  }, []);
+
+  const editRecipeHandler = async () => {
+    const { error } = await supabase
       .from("Datas")
-      .insert({ user, date, dishname, category, price });
-    if (data) {
-    } else {
-      setOpenModel(false);
-    }
+      .update({ user, date, dishname, category, price })
+      .eq("id", item.id);
 
     if (error) {
-      alert("something went wrong");
+      alert("update error");
+    } else {
+      setOpenModel(false);
     }
 
     if (!user || !date || !dishname || !category || !price) {
@@ -198,7 +208,7 @@ function J25EditModal({ setAnchorEl, openModel, setOpenModel }) {
               )}
               <Button
                 onClick={() => {
-                  addRecipeHandler();
+                  editRecipeHandler();
                 }}
                 sx={{
                   backgroundColor: "red",

@@ -41,7 +41,12 @@ function Tourcard({ addToCartHandler, item, deleteRecipe, setOpen }) {
   };
 
   return (
-    <Card sx={{ width: {xl:210,lg:210,md:210,sm:330,xs:330}, height: {xl:320,lg:320,md:320,sm:410,xs:410}, }}>
+    <Card
+      sx={{
+        width: { xl: 210, lg: 210, md: 210, sm: 330, xs: 330 },
+        height: { xl: 320, lg: 320, md: 320, sm: 410, xs: 410 },
+      }}
+    >
       <CardHeader
         avatar={<Avatar>J</Avatar>}
         action={
@@ -67,6 +72,7 @@ function Tourcard({ addToCartHandler, item, deleteRecipe, setOpen }) {
                   openModel={openModel}
                   setOpenModel={setOpenModel}
                   setAnchorEl={setAnchorEl}
+                  item={item}
                 />
               )}
               <MenuItem
