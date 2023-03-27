@@ -21,8 +21,19 @@ function App() {
         <Routes>
           <Route path="/" element={<Login setToken={setToken} />} />
           <Route path="/forget" element={<ForgetPW />} />
-          {token ? <Route path="/home" element={<Home token={token} />} /> : ""}
-         
+          {token ? (
+            <Route
+              path="/home"
+              element={
+                <Home
+                  token={token}
+                  
+                />
+              }
+            />
+          ) : (
+            ""
+          )}
         </Routes>
       </BrowserRouter>
     </>

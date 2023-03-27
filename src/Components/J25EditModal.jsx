@@ -18,6 +18,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import TextField from "@mui/material/TextField";
 import supabase from "../config/supabase";
 
+
 const Styledmodel = styled(Modal)({
   display: "flex",
   alignItems: "center",
@@ -53,7 +54,7 @@ function J25EditModal({ item, setAnchorEl, openModel, setOpenModel }) {
       category: item.category,
       price: item.price,
     });
-  }, []);
+  }, [item]);
 
   const editRecipeHandler = async () => {
     const { error } = await supabase
@@ -98,12 +99,7 @@ function J25EditModal({ item, setAnchorEl, openModel, setOpenModel }) {
 
   return (
     <div>
-      <Styledmodel
-        aria-labelledby="transition-modal-title"
-        aria-describedby="transition-modal-description"
-        open={open}
-        closeAfterTransition
-      >
+      <Styledmodel open={open}>
         <Fade in={open}>
           <Styledbox>
             <Stack
@@ -132,6 +128,7 @@ function J25EditModal({ item, setAnchorEl, openModel, setOpenModel }) {
                 }}
               >
                 <Stack spacing={1}>
+                 
                   <TextField
                     variant="standard"
                     label="User Name"
@@ -141,6 +138,7 @@ function J25EditModal({ item, setAnchorEl, openModel, setOpenModel }) {
                       setInputData({ ...inputData, user: e.target.value });
                     }}
                   />
+
                   <Input
                     type="date"
                     value={date}

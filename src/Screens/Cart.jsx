@@ -10,10 +10,9 @@ import { IconButton } from "@mui/material";
 function Cart({ deleteCartItem, open, setOpen }) {
   return (
     <Modal
-      aria-labelledby="transition-modal-title"
-      aria-describedby="transition-modal-description"
+    
       open={open}
-      closeAfterTransition
+     
     >
       <Fade in={open}>
         <Box

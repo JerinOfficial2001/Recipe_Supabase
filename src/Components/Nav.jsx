@@ -16,6 +16,7 @@ import { styled } from "@mui/material";
 import { useSelector } from "react-redux";
 import Cart from "../Screens/Cart";
 import Message from "@mui/icons-material/Message";
+import Profile from "../Screens/Profile";
 
 const StyledBadge = styled(Badge)({
   color: "white",
@@ -32,6 +33,7 @@ const StyledBadge = styled(Badge)({
 
 function Nav({ logouthandler }) {
   const [open, setOpen] = useState(false);
+  const [openProfile, setopenProfile] = useState(false);
   const { carts } = useSelector((item) => item.user);
 
   const [anchorEl, setAnchorEl] = useState(null);
@@ -74,6 +76,7 @@ function Nav({ logouthandler }) {
             <StyledBadge>{carts?.length}</StyledBadge>
           </IconButton>
           {open && <Cart open={open} setOpen={setOpen} />}
+
           <IconButton edge="start" color="inherit" aria-label="menu">
             <MenuOpen onClick={handleClick} />
             <Menu
@@ -83,7 +86,20 @@ function Nav({ logouthandler }) {
               open={Boolean(anchorEl)}
               onClose={handleClose}
             >
-              <MenuItem onClick={handleClose}>Profile</MenuItem>
+              <MenuItem
+                onClick={() => {
+                  setopenProfile((p) => !p);
+                  handleClose((p) => !p);
+                }}
+              >
+                Profile
+              </MenuItem>
+              {openProfile && (
+                <Profile
+                  openProfile={openProfile}
+                  setopenProfile={setopenProfile}
+                />
+              )}
               <MenuItem onClick={handleClose}>My account</MenuItem>
               <MenuItem onClick={logout}>Logout</MenuItem>
             </Menu>

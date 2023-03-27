@@ -12,6 +12,9 @@ import SignUpModal from "../Components/SignUpModal";
 import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
 import Loader from "../Components/Loader";
+import Alert from "@mui/material/Alert";
+
+
 
 const Styledstack = styled(Stack)({
   height: "350px",
@@ -33,6 +36,7 @@ function Login({ setToken }) {
     password: "",
   });
   const [formerror, setFormerror] = useState(false);
+  const [sucessMessage, setsucessMessage] = useState(false);
   const { email, password } = inputdata;
   const handleSubmit = async () => {
     setLoading(true);
@@ -43,11 +47,12 @@ function Login({ setToken }) {
     if (error) {
       setFormerror("true");
     } else {
+      setsucessMessage(true);
       navigate("/home");
     }
     if (data) {
       setToken(data);
-      alert("Successfully Logged In");
+      setsucessMessage(true);
       setFormerror(false);
     }
 
@@ -64,7 +69,14 @@ function Login({ setToken }) {
   return (
     <>
       {isLoading && <Loader />}
-      <Grid container display="flex" height="100vh">
+      <Grid
+        sx={{
+          background: "linear-gradient(to right bottom, #430089, #82ffa1)",
+        }}
+        container
+        display="flex"
+        height="100vh"
+      >
         <Stack
           direction={{
             xl: "row",
@@ -112,6 +124,9 @@ function Login({ setToken }) {
                 display="flex"
                 flexDirection="column"
               >
+                {sucessMessage && (
+                  <Alert severity="success">Succesfully Logged in</Alert>
+                )}
                 {formerror && (
                   <h6 style={{ color: " red" }}>All Fields are manditory</h6>
                 )}

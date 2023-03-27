@@ -102,7 +102,7 @@ const deleteCartItem = (id) => {
 
               return (
                 <>
-                  <Cart deleteCartItem={deleteCartItem} />
+                  <Cart cartItems={cartItems} deleteCartItem={deleteCartItem} />
                   <Tourcard
                     addToCartHandler={addToCartHandler}
                     setOpen={setOpen}

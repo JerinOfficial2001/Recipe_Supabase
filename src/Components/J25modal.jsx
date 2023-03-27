@@ -18,13 +18,13 @@ import InputAdornment from "@mui/material/InputAdornment";
 import TextField from "@mui/material/TextField";
 import supabase from "../config/supabase";
 
-const Styledmodel = styled(Modal)({
+export const Styledmodel = styled(Modal)({
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
 });
 
-const Styledbox = styled(Box)({
+export const Styledbox = styled(Box)({
   height: 500,
   backgroundColor: "#fff",
   borderRadius: 10,
@@ -89,10 +89,9 @@ function J25modal({ openModel, setOpenModel }) {
   return (
     <div>
       <Styledmodel
-        aria-labelledby="transition-modal-title"
-        aria-describedby="transition-modal-description"
+       
         open={open}
-        closeAfterTransition
+       
       >
         <Fade in={open}>
           <Styledbox>
