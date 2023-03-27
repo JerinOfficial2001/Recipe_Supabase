@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Cart from "./Pages/Cart";
 import ForgetPW from "./Pages/ForgetPW";
 import Home from "./Pages/Home";
 import Login from "./Pages/Login";
@@ -23,7 +22,7 @@ function App() {
           <Route path="/" element={<Login setToken={setToken} />} />
           <Route path="/forget" element={<ForgetPW />} />
           {token ? <Route path="/home" element={<Home token={token} />} /> : ""}
-          {token ? <Route path="/cart" element={<Cart />} /> : ""}
+         
         </Routes>
       </BrowserRouter>
     </>

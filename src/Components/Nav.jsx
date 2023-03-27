@@ -10,10 +10,12 @@ import MenuOpen from "@mui/icons-material/MenuOpen";
 import Stack from "@mui/material/Stack";
 import ShoppingCart from "@mui/icons-material/ShoppingCart";
 import Searchbar from "./Searchbar";
-import { useNavigate } from "react-router-dom";
+
 import Badge from "@mui/material/Badge";
 import { styled } from "@mui/material";
 import { useSelector } from "react-redux";
+import Cart from "../Screens/Cart";
+import Message from "@mui/icons-material/Message";
 
 const StyledBadge = styled(Badge)({
   color: "white",
@@ -29,8 +31,9 @@ const StyledBadge = styled(Badge)({
 });
 
 function Nav({ logouthandler }) {
+  const [open, setOpen] = useState(false);
   const { carts } = useSelector((item) => item.user);
-  const navigate = useNavigate();
+
   const [anchorEl, setAnchorEl] = useState(null);
   const logout = () => {
     logouthandler();
@@ -46,12 +49,19 @@ function Nav({ logouthandler }) {
   return (
     <AppBar position="sticky">
       <Toolbar sx={{ justifyContent: "space-between" }}>
-        <Typography variant="h6">Recipe</Typography>
+        <Typography variant="h6">Recipebook</Typography>
         <Searchbar />
         <Stack direction="row" spacing={1}>
+          <IconButton>
+            <Message
+              sx={{
+                color: "#fff",
+              }}
+            />
+          </IconButton>
           <IconButton
             onClick={() => {
-              navigate("/cart");
+              setOpen((p) => !p);
             }}
           >
             <ShoppingCart
@@ -63,6 +73,7 @@ function Nav({ logouthandler }) {
 
             <StyledBadge>{carts?.length}</StyledBadge>
           </IconButton>
+          {open && <Cart open={open} setOpen={setOpen} />}
           <IconButton edge="start" color="inherit" aria-label="menu">
             <MenuOpen onClick={handleClick} />
             <Menu

@@ -11,6 +11,7 @@ import TextField from "@mui/material/TextField";
 import SignUpModal from "../Components/SignUpModal";
 import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
+import Loader from "../Components/Loader";
 
 const Styledstack = styled(Stack)({
   height: "350px",
@@ -24,6 +25,7 @@ const Styledstack = styled(Stack)({
 });
 
 function Login({ setToken }) {
+  const [isLoading, setLoading] = useState(false);
   const [openModal, setopenModal] = useState(false);
   const navigate = useNavigate();
   const [inputdata, setInputdata] = useState({
@@ -33,6 +35,7 @@ function Login({ setToken }) {
   const [formerror, setFormerror] = useState(false);
   const { email, password } = inputdata;
   const handleSubmit = async () => {
+    setLoading(true);
     const { data, error } = await supabase.auth.signInWithPassword({
       email: email,
       password: password,
@@ -56,106 +59,118 @@ function Login({ setToken }) {
         password: "",
       });
     }
-    console.log(inputdata);
+    setLoading(false);
   };
   return (
-    <Grid container display="flex" height="100vh">
-      <Stack
-        height="100%"
-        width="100%"
-        direction="row"
-        justifyContent="center"
-        alignItems="center"
-      >
-        <Box
-          width="50%"
-          display="flex"
-          flexDirection="column"
-          alignItems="center"
+    <>
+      {isLoading && <Loader />}
+      <Grid container display="flex" height="100vh">
+        <Stack
+          direction={{
+            xl: "row",
+            lg: "row",
+            md: "column",
+            sm: "column",
+            xs: "column",
+          }}
+          height="100%"
+          width="100%"
           justifyContent="center"
-          flex={2}
+          alignItems="center"
         >
-          <Box>
-            <Typography color="#1877f2" variant="h3" fontWeight="bold">
-              Recipebook
-            </Typography>
-            <Typography variant="h5">
-              Recipebook helps you connect and share <br /> with the people in
-              your life.
-            </Typography>
+          <Box
+            width="50%"
+            display="flex"
+            flexDirection="column"
+            alignItems="center"
+            justifyContent="center"
+            flex={2}
+          >
+            <Box>
+              <Typography color="#1877f2" variant="h3" fontWeight="bold">
+                Recipebook
+              </Typography>
+              <Typography variant="h5">
+                Recipebook helps you connect and share <br /> with the people in
+                your life.
+              </Typography>
+            </Box>
           </Box>
-        </Box>
-        <Box
-          display="flex"
-          flexDirection="column"
-          justifyContent="center"
-          alignItems="center"
-          width="50%"
-          flex={2}
-        >
-          <Styledstack direction="column" spacing={4}>
-            <Box
-              gap="10px"
-              borderBottom="1px solid grey"
-              width="90%"
-              display="flex"
-              flexDirection="column"
-            >
-              {formerror && (
-                <h6 style={{ color: " red" }}>All Fields are manditory</h6>
-              )}
-              <TextField
-                type="email"
-                placeholder="Email"
-                value={email}
-                onChange={(e) => {
-                  setInputdata({ ...inputdata, email: e.target.value });
-                }}
-              />
-              <TextField
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => {
-                  setInputdata({ ...inputdata, password: e.target.value });
-                }}
-              />
-              <Button
-                variant="contained"
-                onClick={(e) => {
-                  handleSubmit(e);
-                  e.preventDefault();
-                }}
-              >
-                Login
-              </Button>
+          <Box
+            display="flex"
+            flexDirection="column"
+            justifyContent="center"
+            alignItems="center"
+            width="100%"
+            flex={2}
+          >
+            <Styledstack direction="column" spacing={4}>
               <Box
-                height="40px"
+                gap="10px"
+                borderBottom="1px solid grey"
+                width="90%"
                 display="flex"
                 flexDirection="column"
-                justifyContent="center"
-                alignItems="center"
               >
-                <Link href="/forget">Forgotten password?</Link>
+                {formerror && (
+                  <h6 style={{ color: " red" }}>All Fields are manditory</h6>
+                )}
+                <TextField
+                  type="email"
+                  placeholder="Email"
+                  value={email}
+                  onChange={(e) => {
+                    setInputdata({ ...inputdata, email: e.target.value });
+                  }}
+                />
+                <TextField
+                  type="password"
+                  placeholder="Password"
+                  value={password}
+                  onChange={(e) => {
+                    setInputdata({ ...inputdata, password: e.target.value });
+                  }}
+                />
+                <Button
+                  variant="contained"
+                  onClick={(e) => {
+                    handleSubmit(e);
+                    e.preventDefault();
+                  }}
+                >
+                  Login
+                </Button>
+                <Box
+                  height="40px"
+                  display="flex"
+                  flexDirection="column"
+                  justifyContent="center"
+                  alignItems="center"
+                >
+                  <Link href="/forget">Forgotten password?</Link>
+                </Box>
               </Box>
-            </Box>
-            {openModal && (
-              <SignUpModal openModal={openModal} setopenModal={setopenModal} />
-            )}
+              {openModal && (
+                <SignUpModal
+                  openModal={openModal}
+                  setopenModal={setopenModal}
+                />
+              )}
 
-            <Button
-              variant="contained"
-              onClick={() => {
-                setopenModal((p) => !p);
-              }}
-              sx={{ backgroundColor: "#42b72a" }}
-            >
-              Create New Account
-            </Button>
-          </Styledstack>
-        </Box>
-      </Stack>
-    </Grid>
+              <Button
+                variant="contained"
+                onClick={() => {
+                  setopenModal((p) => !p);
+                }}
+                sx={{ backgroundColor: "#42b72a" }}
+              >
+                Create New Account
+              </Button>
+            </Styledstack>
+          </Box>
+        </Stack>
+      </Grid>
+    </>
   );
 }
 

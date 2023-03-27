@@ -17,11 +17,8 @@ import MenuItem from "@mui/material/MenuItem";
 import supabase from "../config/supabase";
 import J25EditModal from "./J25EditModal";
 import Button from "@mui/material/Button";
-import { useDispatch } from "react-redux";
-import { addcard } from "../Redux/User";
 
-function Tourcard({ item, deleteRecipe, setOpen }) {
-  const dispatch = useDispatch();
+function Tourcard({ addToCartHandler, item, deleteRecipe, setOpen }) {
   const [openModel, setOpenModel] = useState(false);
   const [anchorEl, setAnchorEl] = useState(false);
   const { id, user, date, dishname, category, price } = item;
@@ -44,7 +41,7 @@ function Tourcard({ item, deleteRecipe, setOpen }) {
   };
 
   return (
-    <Card sx={{ maxWidth: 210, minWidth: 210, maxHeight: 320 }}>
+    <Card sx={{ width: {xl:210,lg:210,md:210,sm:330,xs:330}, height: {xl:320,lg:320,md:320,sm:410,xs:410}, }}>
       <CardHeader
         avatar={<Avatar>J</Avatar>}
         action={
@@ -87,7 +84,7 @@ function Tourcard({ item, deleteRecipe, setOpen }) {
       />
       <CardMedia
         sx={{
-          height: 120,
+          height: { xl: 120, lg: 120, md: 120, sm: 200, xs: 200 },
         }}
         image={require("../assets/dish.jpeg")}
         title={<Typography fontSize="15px"> {dishname}</Typography>}
@@ -117,8 +114,8 @@ function Tourcard({ item, deleteRecipe, setOpen }) {
         </IconButton>
         <Button
           onClick={() => {
-            dispatch(addcard(item));
             setOpen(true);
+            addToCartHandler();
           }}
         >
           Add Cart

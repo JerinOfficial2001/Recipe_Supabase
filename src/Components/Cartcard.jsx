@@ -2,16 +2,15 @@ import { Button, Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { remove } from "../Redux/User";
+import { useSelector } from "react-redux";
 
-function Cartcard() {
-  const dispatch = useDispatch();
+function Cartcard({ deleteCartHandler, deleteitem }) {
   const { carts } = useSelector((item) => item.user);
 
   return (
     <Stack width="100%" direction="column" spacing={1}>
       {carts?.map((item) => {
+        const { id, category, quantity, dishname } = item;
         return (
           <Stack
             alignItems="center"
@@ -27,7 +26,7 @@ function Cartcard() {
               spacing={1}
             >
               <Box
-                key={item.id}
+                key={id}
                 display="flex"
                 justifyContent="center"
                 alignItems="center"
@@ -39,15 +38,15 @@ function Cartcard() {
               </Box>
 
               <Box>
-                <Typography>{item.dishname}</Typography>
-                <Typography variant="h8">{item.category}</Typography>
+                <Typography>{dishname}</Typography>
+                <Typography variant="h8">{category}</Typography>
               </Box>
             </Stack>
             <Stack direction="row" spacing={1} alignItems="center">
-              <Typography>Quantity:{item.quantity}</Typography>
+              <Typography>Quantity:{quantity}</Typography>
               <Button
                 onClick={() => {
-                  dispatch(remove(item));
+                  deleteCartHandler(deleteitem);
                 }}
               >
                 Remove
