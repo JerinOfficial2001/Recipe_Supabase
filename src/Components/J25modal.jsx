@@ -18,6 +18,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import TextField from "@mui/material/TextField";
 import supabase from "../config/supabase";
 
+
 export const Styledmodel = styled(Modal)({
   display: "flex",
   alignItems: "center",
@@ -32,6 +33,7 @@ export const Styledbox = styled(Box)({
 });
 
 function J25modal({ openModel, setOpenModel }) {
+
   const [validation, setValidation] = useState(false);
   const [inputData, setInputData] = useState({
     user: "",
@@ -41,7 +43,7 @@ function J25modal({ openModel, setOpenModel }) {
     category: "",
     price: "",
   });
-  const { user, date, dishname, category, price } = inputData;
+  const { user, file, date, dishname, category, price } = inputData;
   const open = openModel;
 
   const addRecipeHandler = async () => {
@@ -49,7 +51,6 @@ function J25modal({ openModel, setOpenModel }) {
       .from("Datas")
       .insert({ user, date, dishname, category, price });
     if (data) {
-      
     } else {
       setOpenModel(false);
     }
@@ -58,7 +59,7 @@ function J25modal({ openModel, setOpenModel }) {
       alert("something went wrong");
     }
 
-    if (!user || !date || !dishname || !category || !price) {
+    if (!user || !file || !date || !dishname || !category || !price) {
       setValidation(true);
     } else {
       setInputData({
@@ -86,13 +87,11 @@ function J25modal({ openModel, setOpenModel }) {
     },
   ];
 
+
+
   return (
     <div>
-      <Styledmodel
-       
-        open={open}
-       
-      >
+      <Styledmodel open={open}>
         <Fade in={open}>
           <Styledbox>
             <Stack
@@ -137,14 +136,15 @@ function J25modal({ openModel, setOpenModel }) {
                       setInputData({ ...inputData, date: e.target.value });
                     }}
                   />
-                  {/* <Input
+                  <TextField
                     placeholder="Image"
                     type="file"
                     value={file}
+                    accept="image/png,image/jpeg"
                     onChange={(e) => {
                       setInputData({ ...inputData, file: e.target.value });
                     }}
-                  /> */}
+                  />
 
                   <TextField
                     variant="standard"

@@ -4,13 +4,11 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Nav from "../Components/Nav";
 import supabase from "../config/supabase";
-
 import Grid from "@mui/material/Grid";
 import Tourcard from "../Components/Tourcard";
 import Form from "../Components/Form";
 import Notify from "../Components/Notify";
 import Loader from "../Components/Loader";
-
 import Cart from "../Screens/Cart";
 import { useDispatch } from "react-redux";
 import { addcard, getCartItems } from "../Redux/User";
@@ -71,11 +69,11 @@ function Home({ token }) {
 
   fetchCartData();
 
-const deleteCartItem = (id) => {
-  setcartItems((prevcartitem) => {
-    return prevcartitem.filter((item) => item.id !== id);
-  });
-};
+  const deleteCartItem = (id) => {
+    setcartItems((prevcartitem) => {
+      return prevcartitem.filter((item) => item.id !== id);
+    });
+  };
 
   return (
     <>
@@ -85,6 +83,11 @@ const deleteCartItem = (id) => {
       <Container maxWidth="xl">
         <Stack direction="column" gap="50px">
           <Form recipe={recipe} />
+        </Stack>
+        {open && <Notify setOpen={setOpen} open={open} />}
+
+        <Stack direction="column" gap="50px">
+         
           <Grid container columnGap={2} rowGap={2} columns={8} direction="row">
             {recipe.map((item, index) => {
               const { id, dishname, category, quantity } = item;

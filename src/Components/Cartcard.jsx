@@ -5,10 +5,8 @@ import React from "react";
 import { useSelector } from "react-redux";
 import supabase from "../config/supabase";
 
-
 function Cartcard({ deleteCartItem }) {
   const { carts } = useSelector((item) => item.user);
-
 
   const deleteCartHandler = async (id) => {
     const { error } = await supabase.from("cartdata").delete().eq("id", id);
@@ -46,7 +44,12 @@ function Cartcard({ deleteCartItem }) {
                 width="70px"
                 bgcolor="yellow"
               >
-                Image
+                <img
+                  height="100%"
+                  width="100%"
+                  src={require("../assets/dish.jpeg")}
+                  alt="recipe"
+                />
               </Box>
 
               <Box>
@@ -59,7 +62,6 @@ function Cartcard({ deleteCartItem }) {
               <Button
                 onClick={() => {
                   deleteCartHandler(id);
-                 
                 }}
               >
                 Remove{" "}

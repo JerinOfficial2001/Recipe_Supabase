@@ -1,16 +1,18 @@
 import TextField from "@mui/material/TextField";
 import Modal from "@mui/material/Modal";
 import React, { useState } from "react";
-
 import supabase from "../config/supabase";
 import Box from "@mui/material/Box";
 import Fade from "@mui/material/Fade";
-import { Checkbox, FormControlLabel, FormGroup, styled } from "@mui/material";
+import { styled } from "@mui/material";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import Close from "@mui/icons-material/Close";
+import Checkbox from "@mui/material/Checkbox";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormGroup from "@mui/material/FormGroup";
 
 const Styledmodel = styled(Modal)({
   display: "flex",
@@ -19,7 +21,6 @@ const Styledmodel = styled(Modal)({
 });
 
 const Styledbox = styled(Box)({
-  height: 550,
   backgroundColor: "#fff",
   borderRadius: 10,
   width: 450,
@@ -52,13 +53,13 @@ function SignUpModal({ setopenModal, openModal }) {
       setopenModal(false);
     }
     if (data) {
-      alert("We have sent Comfirm verification to your email");
       setFormerror(false);
     }
 
     if (!date || !gender || !name || !email || !password) {
       setFormerror(true);
     } else {
+      alert("We have sent Comfirm verification to your email");
       setInputdata({
         name: "",
         email: "",
@@ -83,7 +84,7 @@ function SignUpModal({ setopenModal, openModal }) {
               margin="0px 15px"
               borderBottom="1px solid #babdc1"
               flexDirection="column"
-             height='90px'
+              height="90px"
               width="100%"
               display="flex"
               justifyContent="center"
@@ -157,17 +158,24 @@ function SignUpModal({ setopenModal, openModal }) {
                 <FormControlLabel control={<Checkbox />} label="Male" />
                 <FormControlLabel control={<Checkbox />} label="Female" />
               </FormGroup>
-
-              <Button
-                variant="contained"
-                sx={{ backgroundColor: "#42b72a" }}
-                onClick={(e) => {
-                  handleSubmit(e);
-                  e.preventDefault();
-                }}
+              <Box
+                display="flex"
+                justifyContent="center"
+                height="50px"
+                width="100%"
+                alignItems="center"
               >
-                Sign Up
-              </Button>
+                <Button
+                  variant="contained"
+                  sx={{ backgroundColor: "#42b72a" }}
+                  onClick={(e) => {
+                    handleSubmit(e);
+                    e.preventDefault();
+                  }}
+                >
+                  Sign Up
+                </Button>
+              </Box>
             </Stack>
           </Stack>
         </Styledbox>

@@ -14,10 +14,7 @@ import Link from "@mui/material/Link";
 import Loader from "../Components/Loader";
 import Alert from "@mui/material/Alert";
 
-
-
 const Styledstack = styled(Stack)({
-  height: "350px",
   backgroundColor: "white",
   width: "65%",
   alignItems: "center",
@@ -47,18 +44,17 @@ function Login({ setToken }) {
     if (error) {
       setFormerror("true");
     } else {
-      setsucessMessage(true);
       navigate("/home");
     }
     if (data) {
       setToken(data);
-      setsucessMessage(true);
       setFormerror(false);
     }
 
     if (!email || !password) {
       setFormerror(true);
     } else {
+      setsucessMessage(true);
       setInputdata({
         email: "",
         password: "",
@@ -118,10 +114,12 @@ function Login({ setToken }) {
           >
             <Styledstack direction="column" spacing={4}>
               <Box
+                height="250px"
                 gap="10px"
                 borderBottom="1px solid grey"
                 width="90%"
                 display="flex"
+                justifyContent="center"
                 flexDirection="column"
               >
                 {sucessMessage && (
@@ -171,16 +169,23 @@ function Login({ setToken }) {
                   setopenModal={setopenModal}
                 />
               )}
-
-              <Button
-                variant="contained"
-                onClick={() => {
-                  setopenModal((p) => !p);
-                }}
-                sx={{ backgroundColor: "#42b72a" }}
+              <Box
+                width="100%"
+                height="80px"
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
               >
-                Create New Account
-              </Button>
+                <Button
+                  variant="contained"
+                  onClick={() => {
+                    setopenModal((p) => !p);
+                  }}
+                  sx={{ backgroundColor: "#42b72a" }}
+                >
+                  Create New Account
+                </Button>
+              </Box>
             </Styledstack>
           </Box>
         </Stack>

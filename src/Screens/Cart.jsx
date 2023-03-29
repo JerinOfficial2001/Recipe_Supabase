@@ -7,7 +7,7 @@ import Fade from "@mui/material/Fade";
 import Cancel from "@mui/icons-material/Cancel";
 import { IconButton } from "@mui/material";
 
-function Cart({ deleteCartItem, open, setOpen }) {
+function Cart({deleteCartItem, open, setOpen }) {
   return (
     <Modal
     
